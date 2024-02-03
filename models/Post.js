@@ -9,7 +9,7 @@ const { Model, DataTypes } = require('sequelize');
          allowNull: false
      },
      content: {
-         type: DataTypes.STRING,
+         type: DataTypes.TEXT,
          allowNull: false
      }
  }, {
