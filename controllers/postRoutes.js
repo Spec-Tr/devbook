@@ -4,7 +4,7 @@ const { User, Post, Comment } = require('../models');
 const { body, validationResult } = require('express-validator');
 
 // Show all posts
-router.get(`/`, (req, res) => {
+router.get('/', (req, res) => {
     Post.findAll({
         include: [User, Comment]
     })
@@ -18,7 +18,7 @@ router.get(`/`, (req, res) => {
 });
 
 // Show post by ID
-router.get("/find/:id", (req, res) => {
+router.get('/find/:id', (req, res) => {
     Post.findByPk(req.params.id, {
         include: [User, Comment]
     })
@@ -36,7 +36,7 @@ router.get("/find/:id", (req, res) => {
 });
 
 // Create Post with validation/sanitization
-router.post("/", [
+router.post('/', [
     body('title').trim().notEmpty().escape(),
     body('content').trim().notEmpty().escape(),
 ], (req, res) => {
@@ -58,8 +58,8 @@ router.post("/", [
         });
 });
 
-// Update Post 
-router.put("/edit/:id", (req, res) => {
+// Update Post
+router.put('/edit/:id', (req, res) => {
     Post.update(
         {
             title: req.body.title,
@@ -81,7 +81,7 @@ router.put("/edit/:id", (req, res) => {
 });
 
 // Delete Post
-router.delete("/delete/:id", (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     Post.destroy({
         where: {
             id: req.params.id,
@@ -97,6 +97,26 @@ router.delete("/delete/:id", (req, res) => {
         .catch((err) => {
             console.error(err);
             res.status(500).json({ error: true, msg: 'Internal server error', details: err.message });
+        });
+});
+
+// Get logged user's posts
+router.get('/logged/posts', (req, res) => {
+    Post.findAll({
+        include: [User, Comment],
+        where: {
+            UserId: req.session.user.id,
+        },
+    })
+        .then((dbPosts) => {
+            res.json(dbPosts);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                msg: 'Internal server error',
+                err,
+            });
         });
 });
 

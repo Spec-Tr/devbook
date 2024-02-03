@@ -1,12 +1,24 @@
 {
   "name": "devbook",
   "version": "1.0.0",
-  "description": "![Screenshot of the app as viewed in a desktop browser](public/assets/images/devbookCap.png)",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [],
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-session-sequelize": "^7.1.7",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "express-validator": "^7.0.1",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.36.0"
+  }
 }

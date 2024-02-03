@@ -97,4 +97,21 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
+// Get comments by logged-in user
+router.get("/logged-comments", (req, res) => {
+    Comment.findAll({
+        include: [Post],
+        where: {
+            UserId: req.session.user.id
+        }
+    })
+        .then((dbComments) => {
+            res.json(dbComments);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: true, msg: 'Internal server error', details: err.message });
+        });
+});
+
 module.exports = router;

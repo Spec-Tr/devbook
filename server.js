@@ -10,7 +10,7 @@ const sequelize = require('./config/connection')
  const PORT = process.env.PORT || 3000;
 
  const sess = {
-     secret: process.env.SESSION_SECRET,
+     secret: process.env.SESSION_SECRET || 'default_secret',
      cookie: {
          maxAge: 1000 * 60 * 60 
      },
@@ -33,7 +33,7 @@ const sequelize = require('./config/connection')
 
  app.use('/', allRoutes);
 
- sequelize.sync({ force: true }).then(function () {
+ sequelize.sync({ force: false }).then(function () {
      app.listen(PORT, function () {
          console.log('App listening on PORT ' + PORT);
      });

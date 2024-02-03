@@ -69,7 +69,7 @@ router.post('/login', (req, res) => {
     })
         .then((foundUser) => {
             if (!foundUser || !bcrypt.compareSync(req.body.password, foundUser.password)) {
-                return res.status(401).json({ error: true, msg: 'Incorrect username or password' });
+                return res.status(401).json({ error: true, msg: 'Incorrect username and/or password' });
             }
 
             req.session.user = {
