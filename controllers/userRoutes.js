@@ -21,7 +21,7 @@ router.get(`/`, (req, res) => {
 });
 
 // Find user by ID
-router.get('/:id', (req, res) => {
+router.get('/find/:id', (req, res) => {
     User.findByPk(req.params.id, {
         include: [Post, Comment],
     })

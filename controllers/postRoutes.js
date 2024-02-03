@@ -18,13 +18,13 @@ router.get(`/`, (req, res) => {
 });
 
 // Show post by ID
-router.get("/:id", (req, res) => {
+router.get("/find/:id", (req, res) => {
     Post.findByPk(req.params.id, {
         include: [User, Comment]
     })
         .then((dbPost) => {
             if (!dbPost) {
-                res.status(404).json({ error: true, msg: 'No such post!' });
+                res.status(404).json({ error: true, msg: 'Post not found in database' });
             } else {
                 res.json(dbPost);
             }

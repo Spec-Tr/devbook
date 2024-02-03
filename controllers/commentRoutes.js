@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // Show comment by ID
-router.get('/:id', (req, res) => {
+router.get('/find/:id', (req, res) => {
     Comment.findByPk(req.params.id, {
         include: [User, Post]
     })
