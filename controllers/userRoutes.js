@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
         });
 });
 
-// Create User with validation/sanitization
+// Create User with validation & sanitization
 router.post('/', [
     body('username').trim().isLength({ min: 3 }).escape(),
     body('password').isLength({ min: 8 }).escape(),
@@ -63,7 +63,7 @@ router.post('/', [
 
 // Login
 router.post('/login', (req, res) => {
-    // TODO: ensure user isn't logged in
+    // TODO: checks if user isn't already logged in
     User.findOne({
         where: { username: req.body.username },
     })
@@ -84,7 +84,7 @@ router.post('/login', (req, res) => {
         });
 });
 
-// Logout of Session
+// Logout of session
 router.get('/logout', (req, res) => {
     req.session.destroy();
     res.send('Logged out successfully');
