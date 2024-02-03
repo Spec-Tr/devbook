@@ -1,0 +1,12 @@
+{
+  "name": "devbook",
+  "version": "1.0.0",
+  "description": "![Screenshot of the app as viewed in a desktop browser](public/assets/images/devbookCap.png)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
