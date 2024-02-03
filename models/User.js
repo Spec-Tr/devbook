@@ -26,7 +26,7 @@ User.init({
     sequelize,
     hooks: {
         beforeCreate: user => {
-            user.password = bcrypt.hashSync(user.password, 10); // Increased cost factor to 10
+            user.password = bcrypt.hashSync(user.password, 10); 
             return user;
         }
     }
