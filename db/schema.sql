@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS devbook_db;
+CREATE DATABASE devbook_db;
