@@ -29,18 +29,18 @@ const fetchPostData = async (postId) => {
 };
 
 const renderPostDetails = (post) => {
-    const formattedDate = moment(post.createdAt).format('YYYY-MM-DD');
+    const date = post.createdAt.slice(0, 10);  
     postTitle.textContent = post.title;
-    postInfo.textContent = `Posted by ${post.User.username} on ${formattedDate}`;
+    postInfo.textContent = `Posted by ${post.User.username} on ${date}`;
     postContent.textContent = post.content;
 };
 
 const renderComments = (comments) => {
     const commentContainer = document.querySelector('.comment-container');
     for (let comment of comments.Comments) {
-        const formattedDate = moment(comment.createdAt).format('YYYY-MM-DD');
+        const date = comment.createdAt.slice(0, 10); 
         const commentText = document.createElement('p');
-        commentText.innerHTML = `${comment.content} <br><br> -- ${comment.author}  -- ${formattedDate}`;
+        commentText.innerHTML = `${comment.content} <br><br> -- ${comment.author}  -- ${date}`;
         commentContainer.appendChild(commentText);
     }
 };

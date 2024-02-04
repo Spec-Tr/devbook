@@ -100,7 +100,7 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-// Get logged user's posts
+// Get loggedIn user's posts
 router.get('/logged/posts', (req, res) => {
     Post.findAll({
         include: [User, Comment],

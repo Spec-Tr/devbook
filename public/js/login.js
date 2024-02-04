@@ -14,6 +14,7 @@ loginForm.addEventListener('submit', e => {
 });
 
 const loginUser = async (userObj) => {
+    console.log('Sending login request...');
     fetch('/api/user/login', {
         method: 'POST',
         body: JSON.stringify(userObj),
@@ -21,13 +22,19 @@ const loginUser = async (userObj) => {
             'Content-Type': 'application/json'
         }
     }).then(res => {
+        console.log('Received response from server:', res);
         if (res.ok) {
-            location.href = '/';
+            console.log('Login successful! Redirecting...');
+            window.location.replace('/');
         } else {
-            alert('Invalid Credentials');
+            console.log('Login failed. Invalid username and/or password.');
+            alert('Invalid username and/or password');
         }
     });
 };
+
+
+
 
 newUserForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -60,7 +67,7 @@ const createUser = async (userObj) => {
     });
 };
 
-// change form when clicked
+// change form on clicked
 changeForm.addEventListener('click', () => {
     if (loginForm.style.display === 'none') {
         loginForm.style.display = 'flex';

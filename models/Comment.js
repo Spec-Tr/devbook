@@ -10,6 +10,11 @@ Comment.init({
         validate: {
             notEmpty: true,
         }
+    },
+    author: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Anonymous'
     }
 }, {
     sequelize

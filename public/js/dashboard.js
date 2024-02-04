@@ -16,14 +16,13 @@ fetch('api/post/logged/posts')
         renderPosts();
     })
     .catch(error => {
-        console.error('Cannto fetch post data', error);
+        console.error('Cannot fetch post data', error);
     });
 
 const renderPosts = () => {
     for (let post of allUserPosts) {
         // Get the post date
         const date = post.createdAt.slice(0, 10);
-        console.log(date);
         // Create & append the outer div with class "post"
         const postDiv = document.createElement('div');
         postDiv.classList.add('post');
@@ -69,7 +68,7 @@ const displayPost = (id) => {
         return;
     } else {
         localStorage.setItem('wantedUserPostId', id);
-        location.replace(`/singleUserPost/${id}`);
+        location.replace(`/displayUserPost/${id}`);
     }
 };
 
@@ -81,8 +80,7 @@ newPostButton.addEventListener('click', () => {
 addPostButton.addEventListener('click', (event) => {
     event.preventDefault();
 
-    // create post with the form info
-    // check that the form was filled completely
+    // create post with form info & check if form filled correctly
     const postTitleInput = document.getElementById('post-title-input');
     const postContentInput = document.getElementById('post-content-input');
     if (postTitleInput.value == '') {

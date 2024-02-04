@@ -63,7 +63,11 @@ router.post('/', [
 
 // Login
 router.post('/login', (req, res) => {
-    // TODO: checks if user isn't already logged in
+    // Check if the user is already logged in
+    if (req.session.user) {
+        return res.status(400).json({ error: true, msg: 'User is already logged in' });
+    }
+
     User.findOne({
         where: { username: req.body.username },
     })
@@ -72,17 +76,29 @@ router.post('/login', (req, res) => {
                 return res.status(401).json({ error: true, msg: 'Incorrect username and/or password' });
             }
 
+            // Set user session
             req.session.user = {
                 id: foundUser.id,
                 username: foundUser.username,
             };
-            res.json(foundUser);
+
+            // Check if the request is an AJAX request
+            if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+                // Respond with a JSON indicating successful login
+                return res.json({ success: true });
+            } else {
+                // Redirect to the home page for non-AJAX requests
+                return res.redirect('/');
+            }
         })
         .catch((err) => {
             console.error(err);
             res.status(500).json({ error: true, msg: 'Internal server error', details: err.message });
         });
 });
+
+
+
 
 // Logout of session
 router.get('/logout', (req, res) => {

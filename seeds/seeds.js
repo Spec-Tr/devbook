@@ -1,12 +1,12 @@
-//Import the models
+//Import models
 const { User, Post, Comment } = require('../models');
 
-//Require sequelize through the connection file
+//Require sequelize via config
 const sequelize = require('../config/connection');
 
 const userData = [
     {
-        username: 'SpecTr',
+        username: 'Spectr',
         password: 'password',
     },
     {
@@ -33,7 +33,7 @@ const postData = [
     },
     {
         title: 'Tech for the Masses',
-        content: 'This is a great way for people to read about technology!'
+        content: 'This is a great way for people to read about technology.'
     },
     {
         title: 'Tech for Me',
@@ -46,7 +46,7 @@ const commentData = [
         content: 'Haha, awesome!'
     },
     {
-        content: 'I never thought about it like that, kudos!'
+        content: 'I never thought about it like that, kudos.'
     },
     {
         content: `Isn't it kind of boring to wait around for tech news?`

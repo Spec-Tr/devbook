@@ -17,33 +17,33 @@ fetch('api/post')
 
 const renderPosts = () => {
     for (let post of allPosts) {
-        // Get the post date
-        const date = new Intl.DateTimeFormat('en-US').format(new Date(post.createdAt));
+        // Get post date
+        const date = post.createdAt.slice(0,10);
 
-        // Create & append the outer div with class "post"
+        // Create & append the div with "post" class
         const postDiv = document.createElement('div');
         postDiv.classList.add('post');
         postDiv.setAttribute('id', `${post.id}`);
         postContainer.appendChild(postDiv);
 
-        // Create & append the inner div with class "post-header"
+        // Create & append inner div with "post-header" class
         const postHeaderDiv = document.createElement('div');
         postHeaderDiv.classList.add('post-header');
         postDiv.appendChild(postHeaderDiv);
 
-        // Create & append the h3 element with class "post-title" and set its text content
+        // Create & append h3 element with "post-title" class and set text content
         const postTitle = document.createElement('h3');
         postTitle.classList.add('post-title');
         postTitle.textContent = `${post.title}`;
         postHeaderDiv.appendChild(postTitle);
 
-        // Create & append the p element for the "Posted by" text
+        // Create & append p element to "Posted by"
         const postInfo = document.createElement('p');
         postInfo.classList.add('post-info');
         postInfo.textContent = `Posted by ${post.User.username} on ${date}`;
         postHeaderDiv.appendChild(postInfo);
 
-        // Create & append the p element with class "post-content" and set its text content
+        // Create & append p element with "post-content" class and set text content
         const postContent = document.createElement('p');
         postContent.classList.add('post-content');
         postContent.textContent = `${post.content}`;

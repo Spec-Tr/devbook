@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { User, Post, Comment } = require('../models');
-const { body, validationResult } = require('express-validator');
 
 // Show all comments
 router.get('/', (req, res) => {
@@ -24,7 +23,7 @@ router.get('/find/:id', (req, res) => {
     })
         .then((dbComment) => {
             if (!dbComment) {
-                res.status(404).json({ error: true, msg: 'Comment not found in database' });
+                res.status(404).json({ error: true, msg: 'Comment not found in the database' });
             } else {
                 res.json(dbComment);
             }
@@ -35,38 +34,27 @@ router.get('/find/:id', (req, res) => {
         });
 });
 
-// Create Comment with validation/sanitization
-router.post('/', [
-    body('content').trim().notEmpty().escape(),
-], (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ error: true, msg: 'Validation error', details: errors.array() });
-    }
-
+// New comment
+router.post('/create/:postId', (req, res) => {
     Comment.create({
         content: req.body.content,
+        UserId: req.session.user.id,
+        PostId: req.params.postId,
+        author: req.session.user.username
     })
-        .then((newComment) => {
+        .then(newComment => {
             res.json(newComment);
         })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: true, msg: 'Internal server error', details: err.message });
+        .catch(err => {
+            res.status(500).json({ msg: 'Unable to post comment', err });
         });
 });
 
 // Update Comment 
 router.put('/edit/:id', (req, res) => {
     Comment.update(
-        {
-            content: req.body.content,
-        },
-        {
-            where: {
-                id: req.params.id,
-            },
-        }
+        { content: req.body.content },
+        { where: { id: req.params.id } }
     )
         .then((editComment) => {
             res.json(editComment);
@@ -80,13 +68,11 @@ router.put('/edit/:id', (req, res) => {
 // Delete Comment
 router.delete('/delete/:id', (req, res) => {
     Comment.destroy({
-        where: {
-            id: req.params.id,
-        },
+        where: { id: req.params.id }
     })
         .then((delComment) => {
             if (!delComment) {
-                res.status(404).json({ error: true, msg: 'Comment not found in database' });
+                res.status(404).json({ error: true, msg: 'Comment not found in the database' });
             } else {
                 res.json({ success: true, msg: 'Comment deleted successfully' });
             }
@@ -97,20 +83,33 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-// Get comments by logged-in user
-router.get("/logged-comments", (req, res) => {
+// Show all the comments in a post
+router.get('/post-comments/:id', (req, res) => {
     Comment.findAll({
-        include: [Post],
-        where: {
-            UserId: req.session.user.id
-        }
+        include: [User, Post],
+        where: { PostId: req.params.id }
     })
         .then((dbComments) => {
             res.json(dbComments);
         })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: true, msg: 'Internal server error', details: err.message });
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ msg: 'Something went wrong :(', err });
+        });
+});
+
+// Show all the comments by the logged-in user
+router.get('/logged-comments', (req, res) => {
+    Comment.findAll({
+        include: [Post],
+        where: { UserId: req.session.user.id }
+    })
+        .then((dbComments) => {
+            res.json(dbComments);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ msg: 'Something went wrong :(', err });
         });
 });
 
