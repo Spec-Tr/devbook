@@ -1,33 +1,34 @@
-const postContainer = document.querySelector('.post-container');
-const newPostButton = document.getElementById('new-post-button');
-const addPostForm = document.getElementById('add-post-form');
-const dashboardPage = document.getElementById('dashboard-page');
-const addPostButton = document.getElementById('add-post-button');
+const postContainer = document.querySelector(`.post-container`);
 let allUserPosts;
 let posts;
 let clickedId;
+const newPostButton = document.getElementById(`new-post-button`);
+const addPostForm = document.getElementById(`add-post-form`);
+const dashboardPage = document.getElementById(`dashboard-page`);
+const addPostButton = document.getElementById(`add-post-button`);
 
 // get all the logged user's post 
-fetch('api/post/logged/posts')
+fetch(`api/post/logged/posts`)
     .then(response => response.json())
     .then(data => {
         allUserPosts = data;
         console.log(allUserPosts);
-        renderPosts();
+        renderPosts()
     })
     .catch(error => {
-        console.error('Cannot fetch post data', error);
-    });
+        console.error('Error trying to fetch posts data', error);
+});
 
 const renderPosts = () => {
-    for (let post of allUserPosts) {
-        // Get the post date
-        const date = post.createdAt.slice(0, 10);
+    for(let post of allUserPosts){   
+        //Get the post date
+        const date = post.createdAt.slice(0,10)
+        console.log(date);
         // Create & append the outer div with class "post"
         const postDiv = document.createElement('div');
         postDiv.classList.add('post');
-        postDiv.setAttribute('id', `${post.id}`);
-        postContainer.appendChild(postDiv);
+        postDiv.setAttribute(`id`, `${post.id}`)
+        postContainer.appendChild(postDiv)
         // Create & append the inner div with class "post-header"
         const postHeaderDiv = document.createElement('div');
         postHeaderDiv.classList.add('post-header');
@@ -46,65 +47,70 @@ const renderPosts = () => {
         const postContent = document.createElement('p');
         postContent.classList.add('post-content');
         postContent.textContent = `${post.content}`;
-        postDiv.appendChild(postContent);
+        postDiv.appendChild(postContent)
     }
-    posts = document.querySelectorAll('.post');
+    posts = document.querySelectorAll(`.post`);
 
     posts.forEach(post => {
-        post.addEventListener('click', event => {
-            if (event.target.parentNode.className === 'post-header') {
-                clickedId = event.target.parentNode.parentNode.id;
-                displayPost(clickedId);
+        post.addEventListener(`click`, event => {
+            if(event.target.parentNode.className === `post-header`){
+                clickedId = event.target.parentNode.parentNode.id
+                displayPost(clickedId)
             } else {
-                clickedId = event.target.parentNode.id;
-                displayPost(clickedId);
-            }
-        });
+                clickedId = event.target.parentNode.id
+                displayPost(clickedId)
+            };      
+        })
     });
 };
 
 const displayPost = (id) => {
-    if (id == '') {
-        return;
-    } else {
-        localStorage.setItem('wantedUserPostId', id);
+    if(id == ``){
+        return
+    } else{
+        localStorage.setItem(`wantedUserPostId`, id);
         location.replace(`/displayUserPost/${id}`);
-    }
+    };
 };
 
-newPostButton.addEventListener('click', () => {
-    dashboardPage.style.display = 'none';
-    addPostForm.style.display = 'block';
-});
+newPostButton.addEventListener(`click`, () => {
+    dashboardPage.style.display = `none`;
+    addPostForm.style.display = `block`;
+})
 
-addPostButton.addEventListener('click', (event) => {
+addPostButton.addEventListener(`click`, (event) => {
     event.preventDefault();
-
-    // create post with form info & check if form filled correctly
-    const postTitleInput = document.getElementById('post-title-input');
-    const postContentInput = document.getElementById('post-content-input');
-    if (postTitleInput.value == '') {
-        alert('Title cannot be empty');
-        return;
-    } else if (postContentInput.value == '') {
-        alert('Content cannot be empty');
-        return;
+    
+    // create post with the form info
+    // check that the form was filled completelly
+    const postTitleInput = document.getElementById(`post-title-input`);
+    const postContentInput = document.getElementById(`post-content-input`);
+    if(postTitleInput.value == ``){
+        alert(`Post title cannot be blank`);
+        return
+    } else if (postContentInput.value == ``){
+        alert(`Post content cannot be blank`);
+        return
     } else {
-        fetch('/api/post/', {
-            method: 'POST',
-            body: JSON.stringify({
-                title: postTitleInput.value,
-                content: postContentInput.value
-            }),
+        fetch(`/api/post/`, {
+            method: `POST`,
+            body: JSON.stringify(
+                {
+                    title: postTitleInput.value,
+                    content: postContentInput.value
+                }
+            ),
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             }
         }).then(res => {
             if (res.ok) {
                 location.reload();
             } else {
-                console.log('Error');
-            }
+                console.log(`Error`);
+            };
         });
     }
-});
+
+    // addPostForm.style.display = `none`;
+})

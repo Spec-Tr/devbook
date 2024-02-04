@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> --}}
+    <title>Tech-Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/displayUserPost.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
-
 <body>
     <header>
         <nav id="nav-bar">
             <a href="/" class="nav-link">Home</a>
             <a href="/dashboard" class="nav-link">Dashboard</a>
             {{#unless isLoggedIn}}
-            <a href="/login" class="nav-link">Login</a>
-            {{/unless}}
-            {{#if isLoggedIn}}
+                <a href="/login" class="nav-link">Login</a>
+            {{/unless}}            
             <a href="/" class="nav-link" id="logout-button">Logout</a>
-            {{/if}}
         </nav>
-        <h1>Tech Blog</h1>
-    </header>
+        <h1>DevBook</h1>
+    </header>   
     <main>
         {{{body}}}
-    </main>
-    <script src="/js/main.js"></script>
+    </main>   
+    <script src="/js/main.js"></script> 
 </body>
-
 </html>

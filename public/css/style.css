@@ -1,5 +1,195 @@
-body{
-    background-color: lightblue;
-    color: rgb(27, 3, 3);
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+:root {
+    --primary-color: rgb(34, 20, 78);
+    --secondary-color: rgb(235, 229, 161);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: var(--primary-color);
+    height: auto;
+    position: relative;
+    color: var(--secondary-color);
+    padding: 20px;
+}
+
+a{
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin: 15px;
+    font-size: larger;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+a:active{
+    color: white;
+    font-weight: bold;
+}
+
+h1{
+    margin: 20px;
+    margin-left: 55px;
+    color: var(--primary-color);
+    border: solid 2px var(--secondary-color);
+    width: fit-content;
+    padding: 10px 35px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgb(78, 78, 78);
+}
+
+main {
+    background-color:var(--secondary-color);
+    height: 85vh;
+    overflow-y: auto;
+    color: var(--primary-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.post-container{
+    margin: 15px 20px;
+    width: 85%;
+}
+
+.post{
+    border: solid var(--primary-color) 4px;
+    margin: 15px 0px;
+}
+
+.post-header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    color: rgb(182, 182, 182);
+    font-size: 23px;
+}
+
+.post-content{
+    padding: 20px;
+    font-size: 20px;
+}
+
+#add-comment-form{
+    display: none;
+}
+
+#add-comment-button{
+    width: 150px;
+    padding: 15px;
+    margin: 15px;
+    height: max-content;
+}
+
+.comment-container{
+    width: 75%;
+}
+
+.comment-container p{
+    border: solid var(--primary-color) 4px;
+    border-top: 35px solid var(--primary-color);    
+    margin: 15px 0px;
+    width: 100%;
+    padding: 15px;
+    height: max-content;
+}
+
+.post-container{
+    height: 0px;
+    margin: 5px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    border: solid var(--primary-color) 4px;
+    height: max-content;
+}
+
+label{
+    font-size: 25px;
+    margin: 15px;
+}
+
+input{
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 15px;
+}
+
+button{
+    margin: 15px;
+}
+
+#change-form{
+    margin: 20px 10px;
+    font-size: 20px;
+    height: fit-content;
+}
+
+#change-form:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.submit-button{
+    padding: 15px;
+    font-size: 18px;
+    width: max-content;
+    border-radius: 4px;
+}
+
+.submit-button:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+#forms-page{
+    margin-top: 10px;
+}
+
+.add-comment-section{
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    margin: 0 20px;
+}
+
+#add-comment-form{
+    width: auto;
+}
+
+#comment-input{
+    width: 70%;
+}
+
+#submit-comment{
+    padding: 15px;
+    font-size: 18px;
+    width: max-content;
+    border-radius: 4px;
+}
+
+#submit-comment:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.spacer{
+    width: 100%;
+    height: 15px;
+    display: block;
+    margin: 40px;
 }

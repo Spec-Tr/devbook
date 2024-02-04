@@ -13,14 +13,6 @@ User.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: [8],
-            isStrongPassword: function (value) {
-                if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(value)) {
-                    throw new Error('Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
-                }
-            }
-        }
     }
 }, {
     sequelize,

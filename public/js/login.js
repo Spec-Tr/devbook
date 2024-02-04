@@ -1,80 +1,72 @@
-const loginForm = document.querySelector('#login-form');
-const newUserForm = document.querySelector('#new-user-form');
-const changeForm = document.getElementById('change-form');
+const loginForm = document.querySelector("#login-form");
+const newUserForm = document.querySelector("#new-user-form");
+const changeForm = document.getElementById(`change-form`);
 
-newUserForm.style.display = 'none';
+newUserForm.style.display = `none`;
 
-loginForm.addEventListener('submit', e => {
+loginForm.addEventListener("submit", e => {
     e.preventDefault();
     const userObj = {
-        username: document.querySelector('#username-input').value,
-        password: document.querySelector('#password-input').value
+        username: document.querySelector("#username-input").value,
+        password: document.querySelector("#password-input").value
     };
-    loginUser(userObj);
+    loginUser(userObj)
 });
 
 const loginUser = async (userObj) => {
-    console.log('Sending login request...');
-    fetch('/api/user/login', {
-        method: 'POST',
+    fetch("/api/user/login", {
+        method: "POST",
         body: JSON.stringify(userObj),
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         }
     }).then(res => {
-        console.log('Received response from server:', res);
         if (res.ok) {
-            console.log('Login successful! Redirecting...');
-            window.location.replace('/');
+            location.href = "/";
         } else {
-            console.log('Login failed. Invalid username and/or password.');
-            alert('Invalid username and/or password');
-        }
+            alert(`Incorrect username and/or password`)
+        };
     });
 };
 
-
-
-
-newUserForm.addEventListener('submit', (event) => {
+newUserForm.addEventListener(`submit`, (event) => {
     event.preventDefault();
-    if (document.querySelector('#new-username').value == '') {
-        alert('Please fill in the username input');
-        return;
-    } else if (document.querySelector('#new-password').value == '') {
-        alert('Please fill in the password input');
-        return;
+    if(document.querySelector("#new-username").value == ``){
+        alert(`Please fill in the username input`);
+        return
+    } else if (document.querySelector("#new-password").value == ``){
+        alert(`Please fill in the password input`);
+        return
     } else {
         const userObj = {
-            username: document.querySelector('#new-username').value,
-            password: document.querySelector('#new-password').value
+            username: document.querySelector("#new-username").value,
+            password: document.querySelector("#new-password").value
         };
         createUser(userObj);
     }
-});
+})
 
 const createUser = async (userObj) => {
-    fetch('/api/user', {
-        method: 'POST',
+    fetch("/api/user", {
+        method: "POST",
         body: JSON.stringify(userObj),
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         }
     }).then(res => {
         if (res.ok) {
             location.reload();
         }
     });
-};
-
-// change form on clicked
-changeForm.addEventListener('click', () => {
-    if (loginForm.style.display === 'none') {
-        loginForm.style.display = 'flex';
-        newUserForm.style.display = 'none';
+}
+// change form on click 
+changeForm.addEventListener(`click`, () => {
+    if(loginForm.style.display === `none`){
+        loginForm.style.display = `flex`;
+        newUserForm.style.display = `none`    
     } else {
-        loginForm.style.display = 'none';
-        newUserForm.style.display = 'flex';
-        changeForm.innerText = 'Login';
+        loginForm.style.display = `none`;
+        newUserForm.style.display = `flex`;
+        changeForm.innerText = `Login`    
     }
-});
+})

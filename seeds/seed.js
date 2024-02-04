@@ -29,7 +29,7 @@ for (let userObj of userData) {
 const postData = [
     {
         title: 'I have Been Waiting Years for This!',
-        content: `FIRST! ...I've always wantted to do that!`
+        content: `FIRST! ...I've always wanted to do that!`
     },
     {
         title: 'Tech for the Masses',

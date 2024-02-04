@@ -1,0 +1,15 @@
+.edit-delete{
+    padding: 15px;
+    width: max-content;
+    margin-left: 45%;
+    border-radius: 4px;
+}
+
+.edit-delete:hover{
+    background-color: blue;
+    color: white;
+}
+
+#delete-post-button:hover{
+    background-color: orange;
+}
