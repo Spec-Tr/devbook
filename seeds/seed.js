@@ -1,9 +1,34 @@
-//Import models
+// Import models
 const { User, Post, Comment } = require('../models');
 
-//Require sequelize via config
-const sequelize = require('../config/connection');
+// Require sequelize via config
+const Sequelize = require('sequelize');
+require('dotenv').config();
 
+// Set up Sequelize connection
+let sequelize;
+
+if (process.env.JAWSDB_URL) {
+    sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else if (process.env.DATABASE_URL) {
+    sequelize = new Sequelize(process.env.DATABASE_URL);
+} else {
+    sequelize = new Sequelize(
+        process.env.DB_NAME,
+        process.env.DB_USER,
+        process.env.DB_PASSWORD,
+        {
+            host: 'localhost',
+            dialect: 'mysql',
+            port: 3306
+        }
+    );
+}
+
+// Encrypt seeded user passwords
+const bcrypt = require('bcryptjs');
+
+// Define user data
 const userData = [
     {
         username: 'Spectr',
@@ -19,13 +44,12 @@ const userData = [
     }
 ];
 
-//Encrypt seeded user passwords
-const bcrypt = require('bcryptjs');
-
+// Hash passwords
 for (let userObj of userData) {
     userObj.password = bcrypt.hashSync(userObj.password, 6)
 }
 
+// Define post data
 const postData = [
     {
         title: 'I have Been Waiting Years for This!',
@@ -41,6 +65,7 @@ const postData = [
     }
 ];
 
+// Define comment data
 const commentData = [
     {
         content: 'Haha, awesome!'
@@ -53,26 +78,33 @@ const commentData = [
     }
 ]
 
-//Seeds function
+// Seeding function
 const seedDatabase = async () => {
-    await sequelize.sync({ force: false });
-    const dbUsers = await User.bulkCreate(userData);
-    const dbPosts = await Post.bulkCreate(postData);
-    const dbComment = await Comment.bulkCreate(commentData);
-    // add post and comments to the accounts
-    await dbUsers[0].addPosts([1]);
-    await dbUsers[1].addPosts([2]);
-    await dbUsers[2].addPosts([3]);
-    await dbUsers[0].addComments([1]);
-    await dbUsers[1].addComments([2]);
-    await dbUsers[2].addComments([3]);
-    await dbPosts[0].addComments([3]);
-    await dbPosts[1].addComments([2]);
-    await dbPosts[2].addComments([1]);
-    console.log('Database seeded successfully');
-    process.exit(0)
+    try {
+        // Sync database
+        await sequelize.sync();
 
+        // Bulk create users, posts, and comments
+        const dbUsers = await User.bulkCreate(userData);
+        const dbPosts = await Post.bulkCreate(postData);
+        const dbComment = await Comment.bulkCreate(commentData);
+
+        // Associate users with posts and comments
+        await dbUsers[0].addPosts([1]);
+        await dbUsers[1].addPosts([2]);
+        await dbUsers[2].addPosts([3]);
+        await dbUsers[0].addComments([1]);
+        await dbUsers[1].addComments([2]);
+        await dbUsers[2].addComments([3]);
+        await dbPosts[0].addComments([3]);
+        await dbPosts[1].addComments([2]);
+        await dbPosts[2].addComments([1]);
+
+        console.log('Database seeded successfully');
+    } catch (error) {
+        console.error('Error seeding database:', error);
+    }
 };
 
-//call the function
+// Call the seeding function
 seedDatabase();

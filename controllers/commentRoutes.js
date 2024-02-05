@@ -32,7 +32,7 @@ router.get("/find/:id", (req, res) => {
     })
 });
 
-// Create Post
+// Create comment
 router.post("/create/:postId", (req, res) => {
     Comment.create({
         content: req.body.content,
